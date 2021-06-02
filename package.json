@@ -1,0 +1,21 @@
+{
+  "name": "crypto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tsc --watch",
+    "start": "node ./_dist/index.js",
+    "execute": "npm i && tsc --project ./tsconfig.json && npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.2",
+    "@types/node-fetch": "^2.5.10"
+  }
+}
