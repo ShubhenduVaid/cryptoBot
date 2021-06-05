@@ -9,10 +9,10 @@ type ClientResponse = {
   result: ClientResponseSuccess;
 };
 
-const getBTC = async () => {
+const getBTC = async (): Promise<number> => {
   const clientResponse = await Client("ETHGBP");
   const data: ClientResponse = await clientResponse.json();
-  return data.result.XETHZGBP.a[0];
+  return (+data.result.XETHZGBP.a[0] as any).toFixed(2);
 };
 
 export default getBTC;
