@@ -8,19 +8,22 @@ const stream = fs.createWriteStream("./ledger.txt", { flags: "a" });
 const buyRequest = (diff: number) => {
   const gbpCoeff = Selectors.getGBPPurchaseCoeff(store.getState());
   const gbpBalance = Selectors.getGBPBalance(store.getState());
+  const btcBalance = Selectors.getBTCBalance(store.getState());
   const coeffList = Object.keys(gbpCoeff).filter(
     (coeff) => Number(coeff) < diff
   );
   const coeff = coeffList[coeffList.length - 1];
   const buyAmount = gbpCoeff[coeff as string];
-  if (gbpBalance > buyAmount) {
+  if (gbpBalance > 0 && gbpBalance > buyAmount) {
     store.dispatch(Actions.decrementGBP(buyAmount));
     const lastBTCPricelist = Selectors.getBTCHistory(store.getState());
     const lastBTCPrice = lastBTCPricelist[lastBTCPricelist.length - 1];
     const btcToBuy = buyAmount / lastBTCPrice;
     store.dispatch(Actions.incrementBTC(btcToBuy));
     writeLogs(
-      `Bought BTC with GBP. GBP ${buyAmount} spent. BTC ${btcToBuy} bought.`
+      `Bought BTC with GBP. GBP ${buyAmount} spent. BTC ${btcToBuy} bought. GBP balance ${
+        gbpBalance - buyAmount
+      }. BTC balance ${btcBalance + btcToBuy}`
     );
   }
 };
@@ -28,6 +31,7 @@ const buyRequest = (diff: number) => {
 const sellRequest = (diff: number) => {
   const btcCoeff = Selectors.getBTCPurchaseCoeff(store.getState());
   const btcBalance = Selectors.getBTCBalance(store.getState());
+  const gbpBalance = Selectors.getGBPBalance(store.getState());
   const coeffList = Object.keys(btcCoeff).filter(
     (coeff) => Number(coeff) < diff
   );
@@ -36,11 +40,13 @@ const sellRequest = (diff: number) => {
   const lastBTCPricelist = Selectors.getBTCHistory(store.getState());
   const lastBTCPrice = lastBTCPricelist[lastBTCPricelist.length - 1];
   const btcToSell = sellAmount / lastBTCPrice;
-  if (btcBalance > btcToSell) {
+  if (btcBalance > 0 && btcBalance > btcToSell) {
     store.dispatch(Actions.incrementtGBP(sellAmount));
     store.dispatch(Actions.decrementtBTC(btcToSell));
     writeLogs(
-      `Sold BTC for GBP. BTC ${btcToSell} sold. GBP ${sellAmount} gained.`
+      `Sold BTC for GBP. BTC ${btcToSell} sold. GBP ${sellAmount} gained. GBP balance ${
+        gbpBalance + sellAmount
+      }. BTC balance ${btcBalance - sellAmount}`
     );
   }
 };
