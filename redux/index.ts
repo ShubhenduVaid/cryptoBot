@@ -8,6 +8,8 @@ import {
   getBTCPurchaseCoeff,
   getBTCBuyDiff,
   getBTCSellDiff,
+  getBTCHistoryAverage,
+  getBTCProjection,
 } from "./accessor/btc";
 import { getETHBalance, getETHHistory, getETHSellCoeff } from "./accessor/eth";
 import { getGBPBalance, getGBPPurchaseCoeff } from "./accessor/gbp";
@@ -28,6 +30,8 @@ const Selectors = {
   getBTCPurchaseCoeff,
   getBTCBuyDiff,
   getBTCSellDiff,
+  getBTCHistoryAverage,
+  getBTCProjection,
   getETHBalance,
   getETHHistory,
   getETHSellCoeff,

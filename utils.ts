@@ -2,6 +2,7 @@ import fs from "fs";
 
 import store, { Actions, Selectors } from "./redux";
 
+fs.writeFile("./ledger.txt", "", () => {});
 const stream = fs.createWriteStream("./ledger.txt", { flags: "a" });
 
 const buyRequest = (diff: number) => {

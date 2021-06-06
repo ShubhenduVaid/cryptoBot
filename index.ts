@@ -8,12 +8,12 @@ let currState: RootState;
 setInterval(() => {
   const unsubscribe = store.subscribe(() => {
     try {
-      console.log("Price average :: ", store.getState().btc.historyAverage);
-      console.log("Projection :: ", store.getState().btc.projection);
-      console.log("Buy Diff ::", store.getState().btc.buyDiff);
-      console.log("Sell Diff :: ", store.getState().btc.sellDiff);
-      console.log("BTC balance :: ", store.getState().btc.balance);
-      console.log("GBP balance :: ", store.getState().gbp.balance);
+      console.log("Price average :: ", Selectors.getBTCHistoryAverage);
+      console.log("Projection :: ", Selectors.getBTCProjection);
+      console.log("Buy Diff ::", Selectors.getBTCBuyDiff);
+      console.log("Sell Diff :: ", Selectors.getBTCSellDiff);
+      console.log("BTC balance :: ", Selectors.getBTCBalance);
+      console.log("GBP balance :: ", Selectors.getGBPBalance);
       unsubscribe();
     } catch (error) {
       console.error(error);
