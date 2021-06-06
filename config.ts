@@ -1,34 +1,75 @@
+import { RootState } from "./redux";
+
 /**
  *  timer to query api
  *  interval * seconds * minutes
  */
-const interval: number = 15 * 1000 * 60;
+const interval = 5 * 1000; // * 60;
+
+const coeff = {
+  "4": 4,
+  "20": 15,
+  "35": 30,
+  "50": 50,
+  "70": 70,
+  "100": 100,
+  "200": 250,
+  "500": 500,
+  "1000": 1000,
+};
 
 /**
  *  currency configs
  */
 // TBD buying via crypto
-const storeConfig = {
+const storeConfig: RootState = {
   gbp: {
+    type: "gbp",
     balance: 1000,
-    purchaseCoeff: { 10: 25, 20: 50, 30: 75, 40: 100 }, // priceDiff : buy amount
+    coeff, // priceDiff : currency amount
   },
   btc: {
+    type: "btc",
     balance: 0,
     history: [],
-    sellCoeff: { 10: 0.25, 20: 0.5, 30: 0.75, 40: 1 }, // priceDiff : % amount
+    historyAverage: [],
+    projection: [],
+    coeff, // crypto price Diff : currency amount
+    buyDiff: 0,
+    sellDiff: 0,
   },
   eth: {
+    type: "eth",
     balance: 0,
     history: [],
-    sellCoeff: { 10: 0.25, 20: 0.5, 30: 0.75, 40: 1 }, // priceDiff : % amount
+    historyAverage: [],
+    projection: [],
+    coeff, // crypto price Diff : currency amount,
+    buyDiff: 0,
+    sellDiff: 0,
   },
 };
 
 /**
- *  storage limit
- *  interval = 1 hour = 15 minutes * 4
+ * 1 hr = 15 min * 4
  */
-const dataLimit: number = 10 * 4; // hours * interval
+const averageSlotLength = 4;
 
-export { interval, storeConfig, dataLimit };
+/**
+ * hours
+ * storage limit for history average
+ */
+const historyAvgDataLimit = 10;
+
+/**
+ *  storage limit for history
+ */
+const historyDataLimit = historyAvgDataLimit * averageSlotLength; // hours * interval
+
+export {
+  interval,
+  storeConfig,
+  historyDataLimit,
+  averageSlotLength,
+  historyAvgDataLimit,
+};

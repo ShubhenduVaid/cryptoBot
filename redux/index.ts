@@ -1,21 +1,33 @@
-import store, { RootState, AppDispatch } from "./store";
-import { storeBTCPrice } from "./reducers/btc";
+import store from "./store";
+import { storeBTCPrice, incrementBTC, decrementtBTC } from "./reducers/btc";
 import { storeETHPrice } from "./reducers/eth";
-import { updateGBPBalance } from "./reducers/gbp";
-import { getBTCBalance, getBTCHistory, getBTCSellCoeff } from "./accessor/btc";
+import { incrementtGBP, decrementGBP } from "./reducers/gbp";
+import {
+  getBTCBalance,
+  getBTCHistory,
+  getBTCPurchaseCoeff,
+  getBTCBuyDiff,
+  getBTCSellDiff,
+} from "./accessor/btc";
 import { getETHBalance, getETHHistory, getETHSellCoeff } from "./accessor/eth";
 import { getGBPBalance, getGBPPurchaseCoeff } from "./accessor/gbp";
+import { RootState, AppDispatch, cryptoType, currencyType } from "./types";
 
 const Actions = {
   storeBTCPrice,
+  incrementBTC,
+  decrementtBTC,
   storeETHPrice,
-  updateGBPBalance,
+  incrementtGBP,
+  decrementGBP,
 };
 
 const Selectors = {
   getBTCBalance,
   getBTCHistory,
-  getBTCSellCoeff,
+  getBTCPurchaseCoeff,
+  getBTCBuyDiff,
+  getBTCSellDiff,
   getETHBalance,
   getETHHistory,
   getETHSellCoeff,
@@ -23,5 +35,5 @@ const Selectors = {
   getGBPPurchaseCoeff,
 };
 
-export { RootState, AppDispatch, Actions, Selectors };
+export { RootState, AppDispatch, Actions, Selectors, cryptoType, currencyType };
 export default store;

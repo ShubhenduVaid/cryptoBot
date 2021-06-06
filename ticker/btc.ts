@@ -12,7 +12,7 @@ type ClientResponse = {
 const getBTC = async (): Promise<number> => {
   const clientResponse = await Client("BTCGBP");
   const data: ClientResponse = await clientResponse.json();
-  return (+data.result.XXBTZGBP.a[0] as any).toFixed(2);
+  return Number(Number(data.result.XXBTZGBP.a[0]).toFixed(2));
 };
 
 export default getBTC;

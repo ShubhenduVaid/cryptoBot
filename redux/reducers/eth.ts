@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { dataLimit, storeConfig } from "../../config";
+import { storeConfig } from "../../config";
+import { cryptoType } from "../";
+import {
+  isTransactionProfitable,
+  setCryptoAvgHistory,
+  setCryptoHistory,
+} from "../utils";
 
-type ethState = {
-  balance: number;
-  history: number[];
-  sellCoeff: Record<number, number>;
-};
-
-const initialState: ethState = {
+const initialState: cryptoType = {
   ...storeConfig.eth,
 };
 
@@ -17,10 +17,8 @@ const ethSlice = createSlice({
   initialState,
   reducers: {
     storeETHPrice: (state, action: PayloadAction<number>) => {
-      if (state.history.length >= dataLimit) {
-        state.history.splice(0, 1);
-      }
-      state.history.push(action.payload);
+      setCryptoHistory(state, action);
+      setCryptoAvgHistory(state);
     },
   },
 });

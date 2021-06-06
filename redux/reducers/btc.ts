@@ -1,14 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { dataLimit, storeConfig } from "../../config";
+import { storeConfig } from "../../config";
+import { cryptoType } from "../";
+import { setCryptoAvgHistory, setCryptoHistory } from "../utils";
 
-type btcState = {
-  balance: number;
-  history: number[];
-  sellCoeff: Record<number, number>;
-};
-
-const initialState: btcState = {
+const initialState: cryptoType = {
   ...storeConfig.btc,
 };
 
@@ -17,13 +13,19 @@ const btcSlice = createSlice({
   initialState,
   reducers: {
     storeBTCPrice: (state, action: PayloadAction<number>) => {
-      if (state.history.length >= dataLimit) {
-        state.history.splice(0, 1);
-      }
-      state.history.push(action.payload);
+      setCryptoHistory(state, action);
+      setCryptoAvgHistory(state);
+    },
+    incrementBTC: (state, action: PayloadAction<number>) => {
+      state.balance = state.balance + action.payload;
+      console.log(`BTC ${action.payload} added. Balance ${state.balance}`);
+    },
+    decrementtBTC: (state, action: PayloadAction<number>) => {
+      state.balance = state.balance - action.payload;
+      console.log(`BTC ${action.payload} spent. Balance ${state.balance}`);
     },
   },
 });
 
-export const { storeBTCPrice } = btcSlice.actions;
+export const { storeBTCPrice, incrementBTC, decrementtBTC } = btcSlice.actions;
 export default btcSlice.reducer;

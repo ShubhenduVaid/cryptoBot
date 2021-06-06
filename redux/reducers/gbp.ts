@@ -1,13 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { storeConfig } from "../../config";
+import { currencyType } from "../";
 
-type gbpState = {
-  balance: number;
-  purchaseCoeff: Record<number, number>;
-};
-
-const initialState: gbpState = {
+const initialState: currencyType = {
   ...storeConfig.gbp,
 };
 
@@ -15,11 +11,16 @@ const gbpSlice = createSlice({
   name: "gbp",
   initialState,
   reducers: {
-    updateGBPBalance: (state, action: PayloadAction<number>) => {
-      state.balance = action.payload;
+    decrementGBP: (state, action: PayloadAction<number>) => {
+      state.balance = state.balance - action.payload;
+      console.log(`GBP ${action.payload} spent. Balance ${state.balance}`);
+    },
+    incrementtGBP: (state, action: PayloadAction<number>) => {
+      state.balance = state.balance + action.payload;
+      console.log(`GBP ${action.payload} added. Balance ${state.balance}`);
     },
   },
 });
 
-export const { updateGBPBalance } = gbpSlice.actions;
+export const { decrementGBP, incrementtGBP } = gbpSlice.actions;
 export default gbpSlice.reducer;
