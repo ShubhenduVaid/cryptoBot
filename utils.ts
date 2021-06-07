@@ -25,6 +25,10 @@ const buyRequest = (diff: number) => {
         gbpBalance - buyAmount
       }. BTC balance ${btcBalance + btcToBuy}`
     );
+  } else {
+    writeLogs(
+      `Low GBP balance. GBP ${buyAmount} needed. Have GBP ${gbpBalance}.`
+    );
   }
 };
 
@@ -47,6 +51,10 @@ const sellRequest = (diff: number) => {
       `Sold BTC for GBP. BTC ${btcToSell} sold. GBP ${sellAmount} gained. GBP balance ${
         gbpBalance + sellAmount
       }. BTC balance ${btcBalance - sellAmount}`
+    );
+  } else {
+    writeLogs(
+      `Low BTC balance. BTC ${btcToSell} needed. Have GBP ${btcBalance}.`
     );
   }
 };
