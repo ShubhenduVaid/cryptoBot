@@ -50,11 +50,11 @@ const sellRequest = (diff: number) => {
     writeLogs(
       `Sold BTC for GBP. BTC ${btcToSell} sold. GBP ${sellAmount} gained. GBP balance ${
         gbpBalance + sellAmount
-      }. BTC balance ${btcBalance - sellAmount}`
+      }. BTC balance ${btcBalance - btcToSell}`
     );
   } else {
     writeLogs(
-      `Low BTC balance. BTC ${btcToSell} needed. Have GBP ${btcBalance}.`
+      `Low BTC balance. BTC ${btcToSell} needed. Have BTC ${btcBalance}.`
     );
   }
 };
