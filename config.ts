@@ -4,7 +4,7 @@ import { RootState } from "./redux";
  *  timer to query api
  *  interval * seconds * minutes
  */
-const interval = 1 * 1000 * 60;
+const interval = 0.5 * 1000 * 60;
 
 const coeff = {
   "4": 4,
